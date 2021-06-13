@@ -5,20 +5,20 @@ export default class Todo extends Component {
         super(props);
         this.state = {
             tasks:[{id:1,text:'Task-1'},{id:2,text:'Task-2'},{id:3,text:'Task-3'}],
-            currTask:''
+            // currTask:''
         }
     }
-    handleChange = (e) => {
-        let val = e.target.value;
-        console.log(val);
-        this.setState({currTask:val});
-    }
-    onSubmit = () =>{
+    // handleChange = (e) => {
+    //     let val = e.target.value;
+    //     console.log(val);
+    //     this.setState({currTask:val});
+    // }
+    onSubmit = (task) =>{
         // this.state.tasks.push({id:this.state.tasks.length + 1,text:this.state.currTask});
         // this.state.currTask = '';
         // console.log(this.state);
 
-        let newTaskArray = [...this.state.tasks,{id:this.state.tasks.length+1,text:this.state.currTask}];
+        let newTaskArray = [...this.state.tasks,{id:this.state.tasks.length+1,text:task}];
         this.setState({
             tasks:newTaskArray,
             currTask:'',
@@ -32,9 +32,10 @@ export default class Todo extends Component {
         this.setState({tasks:newTaskArray})
     }
     render() {
+        console.log('todo render');
         return (
             <>
-            <InputComponent value={this.state.currTask} onChange={this.handleChange} onSubmit={this.onSubmit}/>
+            <InputComponent   onSubmit={this.onSubmit}/>
             <TaskList tasks={this.state.tasks} onDelete={this.onDelete}/>
             </>
         )
@@ -47,12 +48,22 @@ class InputComponent extends Component {
     constructor(props)
     {
         super(props);
+        this.state={
+            currTask:''
+        }
+    }
+    handleChange = (e)=>{
+        this.setState({currTask:e.target.value})
     }
     render() {
+        console.log('input render');
         return (
             <div className="input-container">
-                <input type="text" value={this.props.value} onChange={this.props.onChange}/>
-                <button onClick={this.props.onSubmit}>Add</button>
+                <input type="text" value={this.state.currTask} onChange={this.handleChange}/>
+                <button onClick={()=>{
+                    this.props.onSubmit(this.state.currTask)
+                    // this.setState({currTask=''});
+                }}>Add</button>
             </div>
         )
     }
@@ -65,6 +76,7 @@ class TaskList extends Component {
         super(props);
     }
     render() {
+        console.log('tasklist render');
         return (
             <div className="class-list">
             <ul>
