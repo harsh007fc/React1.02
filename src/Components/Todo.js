@@ -18,11 +18,18 @@ export default class Todo extends Component {
         // this.state.currTask = '';
         // console.log(this.state);
 
-        let nta = [...this.state.tasks,{id:this.state.tasks.length+1,text:this.state.currTask}];
+        let newTaskArray = [...this.state.tasks,{id:this.state.tasks.length+1,text:this.state.currTask}];
         this.setState({
-            tasks:nta,
+            tasks:newTaskArray,
             currTask:'',
         })
+    }
+    onDelete = (id) => {
+        console.log(this);
+        let newTaskArray = this.state.tasks.filter(task =>{
+            return task.id!=id;
+        })
+        this.setState({tasks:newTaskArray})
     }
     render() {
         return (
@@ -37,7 +44,7 @@ export default class Todo extends Component {
                           this.state.tasks.map(task => ( //here parantheses are used becuz we are using or returning jsx inside it
                               <li key={task.id}>
                                   <h1>{task.text}</h1>
-                                  <button>Delete</button>
+                                  <button onClick={() => this.onDelete(task.id)}>Delete</button>
                               </li>
                           ))
                        } 
