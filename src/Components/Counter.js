@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 
 function Counter() {
+    //render hr baar state change hone pr chalega
+    console.log('render');
     //useState returns us a pair of values
     //current state and a function used to change the current state
     //we pass the initial value of our usestate as the argument
@@ -10,14 +12,14 @@ function Counter() {
     let handleIncrement = ()=> {
         setCount(count+1);
     }
-    let handledecrement = ()=> {
-        setCount(count-1);
-    }
+    // let handledecrement = ()=> {
+    //     setCount(count-1);
+    // }
     return (
         <div>
             <h1>{count}</h1>
             <button onClick ={handleIncrement}>+</button>
-            <button onClick = {handledecrement}>-</button>
+            <button onClick = {()=> {setCount(count-1)}}>-</button>
         </div>
     )
 }
